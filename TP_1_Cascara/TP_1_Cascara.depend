@@ -1,7 +1,7 @@
 # depslib dependency file v1.0
 1523308413 source:c:\users\encin\desktop\tp_1_cascara\funciones.c
 
-1523309495 source:c:\users\encin\desktop\tp_1_cascara\main.c
+1523319612 source:c:\users\encin\desktop\tp_1_cascara\main.c
 	<stdio.h>
 	<stdlib.h>
 	"funciones.h"
