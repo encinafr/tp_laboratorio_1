@@ -245,77 +245,7 @@ int buscarPorid(EMovie* listaDato, int tam,int id)
     return aux;
 }
 
-void leeArchivo(FILE* archivo, EMovie* lista)
-{
-    EMovie auxlista;
-    int i=0,cantidad;
-    archivo= fopen("ListaBinaria.bin","rb");
 
-    if(archivo==NULL)
-    {
-        archivo= fopen("ListaBinaria.bin","wb");
-
-        if(archivo==NULL)
-        {
-            printf("ERROR en archivo!!!!!");
-            getch();
-        }
-    }
-
-    else
-    {
-        rewind(archivo);
-        i=0;
-        while(!feof(archivo))
-        {
-            fflush(stdin);
-            cantidad= fread(&lista[i], sizeof(EMovie), 1, archivo);
-            //lista[i]=auxlista;
-            i++;
-            if(cantidad!=1)
-            {
-                if(feof(archivo))
-                {
-                    break;
-                }
-                else
-                {
-                    printf("No leyo el ultimo registro");
-					break;
-                }
-            }
-        }
-    }
-    fclose(archivo);
-}
-
-void escribeArchivo(FILE* archivo, EMovie* lista,MovieList* p1)
-{
-    EMovie auxlista;
-    int i=0;
-
-        archivo= fopen("ListaBinaria.bin","wb");
-
-        if(archivo==NULL)
-        {
-            printf("ERROR en archivo!!!!!");
-            getch();
-        }
-
-        else
-        {
-            for(i=0;i<list_getSize(p1);i++)
-            {
-                if( (lista+i)->estado==1)
-                {
-                    fseek(archivo , 0L, SEEK_END);
-                    fflush(stdin);
-                    fwrite(&lista[i], sizeof(EMovie), 1, archivo);
-                }
-            }
-        }
-        fclose(archivo);
-}
 
 void iniciaArchivoHtml(EMovie* lista, MovieList* p1)
 {

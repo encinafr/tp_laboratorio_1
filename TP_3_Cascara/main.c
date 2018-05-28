@@ -7,8 +7,7 @@ int main()
     MovieList* pl = list_initMovieList();
     EMovie* p = list_newMovie(); // creamos una estructura Person de forma dinámica
     int i,id,existe;
-    FILE* archivo=NULL;
-    leeArchivo(archivo,p,TAM);
+    FILE* archivo;
     char seguir='s';
     int opcion;
 
@@ -43,10 +42,11 @@ int main()
                 break;
             case 3:
                list_modicaMovie(p,pl);
+               iniciaArchivoHtml(p,pl);
                system("pause");
                break;
             case 4:
-                iniciaArchivoHtml(p,TAM);
+                iniciaArchivoHtml(p,pl);
                break;
             case 5:
                  for(i=0; i<list_getSize(pl);i++){
@@ -54,7 +54,6 @@ int main()
                         list_printMovie(list_get(pl,i));
                 }
                }
-                escribeArchivo(archivo,p,TAM);
                 seguir = 'n';
                 break;
             default:
