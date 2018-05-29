@@ -271,7 +271,7 @@ void iniciaArchivoHtml(EMovie* lista, MovieList* p1)
     {
             for(i=0;i<list_getSize(p1);i++)
             {
-                if( (lista+i)->estado==1)
+                if( lista->estado==1)
                 {
                     fprintf(archivoHtml,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",(lista+i)->linkImagen,(lista+i)->titulo,(lista+i)->genero,(lista+i)->puntaje,(lista+i)->duracion,(lista+i)->descripcion);
                 }
