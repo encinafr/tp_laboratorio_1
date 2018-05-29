@@ -6,7 +6,8 @@ int main()
 {
     MovieList* pl = list_initMovieList();
     EMovie* p = list_newMovie(); // creamos una estructura Person de forma dinámica
-    int i,id,existe;
+    int i,id,existe,cont,agregar,auxid,modificar;
+    char confirma;
     FILE* archivo;
     char seguir='s';
     int opcion;
@@ -26,34 +27,84 @@ int main()
         switch(opcion)
         {
             case 1:
-                // copiamos el puntero a la estrcutura cargada "p" a una posicion del array de punteros.
                 p = list_newMovie();
-                list_enterMovie(p);
+                agregar=list_enterMovie(p,pl);
                  list_addMovie(pl,p);
-                system("pause");
+                 if(agregar==1){
+                    printf("La pelicula fue agregada correctamente\n");
+                    system("pause");
+                 }else{
+                     printf("No se pudo agregar la pelicula\n");
+                      system("pause");
+                 }
+
                 break;
             case 2:
                  printf("Ingrese el id de la pelicula que desa eliminar");
                  scanf("%d",&id);
-                 existe = buscarPorid(p,list_getSize(pl),id);
-                list_remove(pl,existe);
+                 existe = buscarPorid(p,pl,id);
+                 if(existe==-1)
+                 {
+                     printf("no se encontro l pelicula.");
+                     system("pause");
+                 }else{
+                   list_printMoviesId(p,pl,id);
+                        do{
+                    printf("\nConfirma Modificacion? [s|n]: ");
+                    fflush(stdin);
+                    scanf("%c", &confirma);
+                    confirma = tolower(confirma);
+                    }while(confirma != 's' && confirma != 'n');
+                 }
+                 if(confirma=='s')
+                 {
+                     list_remove(pl,existe);
+                     printf("Pelicula eliminada\n");
+                     system("pause");
+                 }else{
+
+                    printf("Se cancelo la accion\n");
+                    system("pause");
+                 }
+
 
 
                 break;
             case 3:
-               list_modicaMovie(p,pl);
-               iniciaArchivoHtml(p,pl);
-               system("pause");
+                printf("Ingrese el id de la pelicula que desa modificar\n");
+                scanf("%d",&auxid);
+                existe=buscarPorid(p,pl,auxid);
+                if(existe==-1)
+                {
+                    printf("No se ah encontrado el id");
+                } else{
+                        list_printMoviesId(p,pl,auxid);
+
+                    modificar = list_modicaMovie(p,pl,existe);
+                    }
+                    if(modificar==1){
+                            printf("La moficacion se a realizado correctamente\n");
+                            system("pause");
+                        iniciaArchivoHtml(p,pl);
+                    }else{
+                        printf("No se a realizado la modificaion");
+                     system("pause");
+                    }
+
                break;
             case 4:
                 iniciaArchivoHtml(p,pl);
                break;
             case 5:
-                 for(i=0; i<list_getSize(pl);i++){
+                list_printMovies(p,pl);
+               /*  for(i=0; i<list_getSize(pl);i++){
                     if(p->estado=1){
                         list_printMovie(list_get(pl,i));
                 }
-               }
+               }*/
+               cont=list_getSize(pl);
+               printf("La cantidad de peliculas agregadas es %d:",cont);
+               system("pause");
                 seguir = 'n';
                 break;
             default:

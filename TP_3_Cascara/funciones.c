@@ -4,7 +4,7 @@
 #include "funciones.h"
 
 
-/** \brief Inicializa el array de estructuras Person
+/** \brief Inicializa el array de estructuras
  * \return void
  */
 MovieList* list_initMovieList(void)
@@ -30,11 +30,12 @@ int list_getSize(MovieList* pl)
 }
 // A partir de aca, todas las funciones que interactuaban con la lista (que era global) ahora reciben como primer argumento, la struct PeopleList
 //***********************************************************************************************************************************************
+int list_getid(EMovie* Movie)
+{
+ return Movie->id;
+}
 
-/** \brief Agrega una referencia a una struct Person al array
- *  \param Person p : Puntero a estructura Person
- *  \return void
- */
+
 void list_addMovie(MovieList* pl, EMovie* p)
 {
     pl->movie[pl->index]=p; // copiamos el puntero a la estrcutura cargada "p" a una posicion del array de punteros.
@@ -42,14 +43,14 @@ void list_addMovie(MovieList* pl, EMovie* p)
 // si no hay mas lugar, pedimos más memoria para hacer un array más grande
     if(pl->index>=pl->listSize)
     {
-      printf("no hay mas lugar, redefinimos el array\r\n");
+     // printf("no hay mas lugar, redefinimos el array\r\n");
       pl->listSize+=2; // agregamos dos mas
       pl->movie = (EMovie**)realloc(pl->movie,sizeof(EMovie*)*pl->listSize);
     }
 
 }
 
-/** \brief Crea una estructura del tipo Person en forma dinámica
+/** \brief Crea una estructura del tipo EMovie en forma dinámica
  * \return Devuelve un puntero a la estructura creada
  */
 EMovie* list_newMovie(void)
@@ -95,52 +96,55 @@ void list_remove(MovieList* pl,int indexToDelete)
  * \param Person p : Puntero a estructura Person
  * \return 1 si se ingreso salir, de lo contrario 0
  */
-int list_enterMovie(EMovie* p)
+int list_enterMovie(EMovie* p,MovieList* P1)
 {
-        printf("Ingrese el Titulo:");
-        fflush(stdin);
-         gets(p->titulo);
-         printf("Ingrese id:");
-         scanf("%d",&p->id);
-         printf("Ingrese Genero:");
-         fflush(stdin);
-         gets(p->genero);
-         printf("Ingrese Descripcion:");
-         fflush(stdin);
-         gets(p->descripcion);
-         printf("Ingrese la duracion:");
-         scanf("%d",&p->duracion);
-          printf("Ingrese el puntaje:");
-         scanf("%d",&p->puntaje);
-         printf("Ingrese link de imagen:");
-        fflush(stdin);
-         gets(p->linkImagen);
+    int realizado=0;
+    int existe;
+    int auxid;
+    printf("Ingrese id:");
+         scanf("%d",&auxid);
+         existe=buscarPorid(p,P1,auxid);
+         if(existe!=-1){
+            printf("Ya existe una pelicula con el mismo id.");
+         }else
+         {
+             p->id=auxid;
+             p->estado=1;
 
-        p->estado=1;
+              printf("Ingrese el Titulo:");
+             fflush(stdin);
+             gets(p->titulo);
 
+             printf("Ingrese Genero:");
+             fflush(stdin);
+             gets(p->genero);
+             printf("Ingrese Descripcion:");
+             fflush(stdin);
+             gets(p->descripcion);
+             printf("Ingrese la duracion:");
+             scanf("%d",&p->duracion);
+              printf("Ingrese el puntaje:");
+             scanf("%d",&p->puntaje);
+             printf("Ingrese link de imagen:");
+            fflush(stdin);
+             gets(p->linkImagen);
 
-     return 0;
+            realizado=1;
+         }
+ return realizado;
 }
 
-int list_modicaMovie(EMovie* p,MovieList* p1)
+int list_modicaMovie(EMovie* p,MovieList* p1,int existe)
 {
-    int auxid,existe,salir=0;
+    int realizado=0;
+    int salir=0;
     char confirma;
-
-    printf("Ingrese el id de la pelicula que desa modificar\n");
-    scanf("%d",&auxid);
-        existe=buscarPorid(p,list_getSize(p1),auxid);
-        if(existe==-1)
-        {
-            printf("No se ah encontrado el id");
-        } else{
-                        list_printMovie(p+existe);
-            do{
-                printf("\nConfirma Modificacion? [s|n]: ");
-                fflush(stdin);
-                scanf("%c", &confirma);
-                confirma = tolower(confirma);
-            }while(confirma != 's' && confirma != 'n');
+      do{
+                    printf("\nConfirma Modificacion? [s|n]: ");
+                    fflush(stdin);
+                    scanf("%c", &confirma);
+                    confirma = tolower(confirma);
+                }while(confirma != 's' && confirma != 'n');
 
             if(confirma == 's'){
                      do{
@@ -179,26 +183,17 @@ int list_modicaMovie(EMovie* p,MovieList* p1)
                         printf("Opcion incorrecta");
                         system("pause");
 
-                }
+                    }
 
-            }while(salir != 1);
-
-
-        p->estado=1;
-
-            }
-            else{
-                printf("\nSe ha cancelado la baja\n\n");
-                system("pause");
-            }
-
+        }while(salir != 1);
+            p->estado=1;
+            realizado=1;
         }
 
+    return realizado;
+  }
 
 
-
-     return 0;
-}
 int menuModifica()
 {
     int opcion;
@@ -224,23 +219,37 @@ int menuModifica()
 void list_printMovie(EMovie* p)
 {
     int i;
-    printf("Titulo:\t%s Genero: \t%s Descripcion:\t%s Puntaje:\t %d\tduracion:%d\r\n",p->titulo,p->genero,p->descripcion,p->puntaje,p->duracion);
+    printf("Titulo:\t%s Genero: \t%s Descripcion:\t%s Puntaje:\t %d\tduracion:%d\tID\t%d\r\n",p->titulo,p->genero,p->descripcion,p->puntaje,p->duracion,p->id);
 
 }
-
-int buscarPorid(EMovie* listaDato, int tam,int id)
+void list_printMovies(EMovie* p,MovieList* p1)
+{
+    int i;
+    for(i=0; i<list_getSize(p1);i++){
+                    if(p->estado==1){
+                        list_printMovie(list_get(p1,i));
+                }
+               }
+}
+void list_printMoviesId(EMovie* p,MovieList* p1,int id)
+{
+    int i;
+    for(i=0; i<list_getSize(p1);i++){
+                    if(p->estado==1 && p->id==id){
+                        list_printMovie(list_get(p1,i));
+                }
+               }
+}
+int buscarPorid(EMovie* p, MovieList* p1,int id)
 {
     int aux=-1;
     int i;
-
-    for(i=0; i<tam; i++)
-    {
-        if((listaDato+i)->id==id && (listaDato+i)->estado==1)
-        {
-            aux=i;
-            break;
-        }
-    }
+    for(i=0; i<list_getSize(p1);i++){
+                    if(p->estado==1 && p->id==id){
+                        //list_printMovie(list_get(p1,i));
+                        aux=i;
+                }
+               }
 
     return aux;
 }
