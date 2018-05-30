@@ -12,7 +12,7 @@
 	<string.h>
 	"funciones.h"
 
-1527688536 source:c:\users\alumno\downloads\tp_laboratorio_1-master\tp_3_cascara\funciones.c
+1527690379 source:c:\users\alumno\downloads\tp_laboratorio_1-master\tp_3_cascara\funciones.c
 	<stdio.h>
 	<stdlib.h>
 	<string.h>
@@ -20,7 +20,7 @@
 
 1527687913 c:\users\alumno\downloads\tp_laboratorio_1-master\tp_3_cascara\funciones.h
 
-1527688209 source:c:\users\alumno\downloads\tp_laboratorio_1-master\tp_3_cascara\main.c
+1527690624 source:c:\users\alumno\downloads\tp_laboratorio_1-master\tp_3_cascara\main.c
 	<stdio.h>
 	<stdlib.h>
 	"funciones.h"

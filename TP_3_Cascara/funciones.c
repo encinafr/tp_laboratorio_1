@@ -209,7 +209,6 @@ int menuModifica()
  */
 void list_printMovie(EMovie* p)
 {
-    int i;
     printf("Titulo:\t%s Genero: \t%s Descripcion:\t%s Puntaje:\t %d\tduracion:\t%d\r\n",p->titulo,p->genero,p->descripcion,p->puntaje,p->duracion);
 
 }
@@ -249,28 +248,33 @@ int buscarPorNombre(EMovie* p, MovieList* p1,char titulo[])
 
 void iniciaArchivoHtml(EMovie* lista, MovieList* p1)
 {
-    FILE* archivoHtml;
+    FILE* pArch;
     int i;
 
-    archivoHtml= fopen("ListaPeliculas.html","w");
 
+            for(i=0;i<list_getSize(p1);i++)
+            {
+                if(lista->estado==1)
+                {
+                        list_printhtml(list_get(p1,i));
+                }
+            }
+
+
+
+    printf(" \t ARCHIVO HTML GENERADO CON EXITO!!");
+    getch();
+}
+void list_printhtml(EMovie* p,FILE* archivoHtml)
+{
+    archivoHtml= fopen("ListaPeliculas.html","w");
     if (archivoHtml== NULL)
     {
             printf("No se pudo abrir el archivo");
     }
     else
     {
-            for(i=0;i<list_getSize(p1);i++)
-            {
-                if( lista->estado==1)
-                {
-                    fprintf(archivoHtml,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",lista->linkImagen,lista->titulo,lista->genero,lista->puntaje,lista->duracion,lista->descripcion);
-
-                }
-            }
+       fprintf(archivoHtml,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",p->linkImagen,p->titulo,p->genero,p->puntaje,p->duracion,p->descripcion);
     }
-    fclose(archivoHtml);
-
-    printf(" \t ARCHIVO HTML GENERADO CON EXITO!!");
-    getch();
+     fclose(archivoHtml);
 }

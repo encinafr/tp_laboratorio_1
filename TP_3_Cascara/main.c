@@ -32,11 +32,14 @@ int main()
                 printf("Ingrese el titulo de la pelicula: ");
                   fflush(stdin);
                 gets(tituloaux);
-                existe=buscarPorNombre(p,pl,tituloaux);
+                existe = buscarPorNombre(p,pl,tituloaux);
                 if(existe==-1)
                 {
                      agregar=list_enterMovie(p,pl,tituloaux);
                      list_addMovie(pl,p);
+                }else{
+                    printf("Ya existe la pelicula");
+                    system("pause");
                 }
                  if(agregar==1){
                     printf("La pelicula fue agregada correctamente\n");
