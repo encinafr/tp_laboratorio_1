@@ -6,7 +6,8 @@ int main()
 {
     MovieList* pl = list_initMovieList();
     EMovie* p = list_newMovie(); // creamos una estructura Person de forma dinámica
-    int i,id,existe,cont,agregar,auxid,modificar;
+    int i,existe,cont,agregar,modificar;
+    char tituloaux[100];
     char confirma;
     FILE* archivo;
     char seguir='s';
@@ -28,8 +29,15 @@ int main()
         {
             case 1:
                 p = list_newMovie();
-                agregar=list_enterMovie(p,pl);
-                 list_addMovie(pl,p);
+                printf("Ingrese el titulo de la pelicula: ");
+                  fflush(stdin);
+                gets(tituloaux);
+                existe=buscarPorNombre(p,pl,tituloaux);
+                if(existe==-1)
+                {
+                     agregar=list_enterMovie(p,pl,tituloaux);
+                     list_addMovie(pl,p);
+                }
                  if(agregar==1){
                     printf("La pelicula fue agregada correctamente\n");
                     system("pause");
@@ -40,15 +48,16 @@ int main()
 
                 break;
             case 2:
-                 printf("Ingrese el id de la pelicula que desa eliminar");
-                 scanf("%d",&id);
-                 existe = buscarPorid(p,pl,id);
+                 printf("Ingrese el titulo de la pelicula que desa eliminar: ");
+                   fflush(stdin);
+                 gets(tituloaux);
+                 existe = buscarPorNombre(p,pl,tituloaux);
                  if(existe==-1)
                  {
                      printf("no se encontro l pelicula.");
                      system("pause");
                  }else{
-                   list_printMoviesId(p,pl,id);
+                   list_printMoviesName(p,pl,existe);
                         do{
                     printf("\nConfirma Modificacion? [s|n]: ");
                     fflush(stdin);
@@ -71,14 +80,15 @@ int main()
 
                 break;
             case 3:
-                printf("Ingrese el id de la pelicula que desa modificar\n");
-                scanf("%d",&auxid);
-                existe=buscarPorid(p,pl,auxid);
+                printf("Ingrese el titulo de la pelicula que desa modificar: \n");
+                fflush(stdin);
+                gets(tituloaux);
+                existe=buscarPorNombre(p,pl,tituloaux);
                 if(existe==-1)
                 {
-                    printf("No se ah encontrado el id");
+                    printf("No se ah encontrado la pelicula");
                 } else{
-                        list_printMoviesId(p,pl,auxid);
+                        list_printMoviesName(p,pl,existe);
 
                     modificar = list_modicaMovie(p,pl,existe);
                     }

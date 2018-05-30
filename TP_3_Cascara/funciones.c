@@ -96,24 +96,15 @@ void list_remove(MovieList* pl,int indexToDelete)
  * \param Person p : Puntero a estructura Person
  * \return 1 si se ingreso salir, de lo contrario 0
  */
-int list_enterMovie(EMovie* p,MovieList* P1)
+int list_enterMovie(EMovie* p,MovieList* P1,char titulo[])
 {
     int realizado=0;
     int existe;
-    int auxid;
-    printf("Ingrese id:");
-         scanf("%d",&auxid);
-         existe=buscarPorid(p,P1,auxid);
-         if(existe!=-1){
-            printf("Ya existe una pelicula con el mismo id.");
-         }else
-         {
-             p->id=auxid;
+
+
              p->estado=1;
 
-              printf("Ingrese el Titulo:");
-             fflush(stdin);
-             gets(p->titulo);
+             strcpy(p->titulo,titulo);
 
              printf("Ingrese Genero:");
              fflush(stdin);
@@ -130,7 +121,7 @@ int list_enterMovie(EMovie* p,MovieList* P1)
              gets(p->linkImagen);
 
             realizado=1;
-         }
+
  return realizado;
 }
 
@@ -219,7 +210,7 @@ int menuModifica()
 void list_printMovie(EMovie* p)
 {
     int i;
-    printf("Titulo:\t%s Genero: \t%s Descripcion:\t%s Puntaje:\t %d\tduracion:%d\tID\t%d\r\n",p->titulo,p->genero,p->descripcion,p->puntaje,p->duracion,p->id);
+    printf("Titulo:\t%s Genero: \t%s Descripcion:\t%s Puntaje:\t %d\tduracion:\t%d\r\n",p->titulo,p->genero,p->descripcion,p->puntaje,p->duracion);
 
 }
 void list_printMovies(EMovie* p,MovieList* p1)
@@ -231,21 +222,21 @@ void list_printMovies(EMovie* p,MovieList* p1)
                 }
                }
 }
-void list_printMoviesId(EMovie* p,MovieList* p1,int id)
+void list_printMoviesName(EMovie* p,MovieList* p1,int existe)
 {
     int i;
     for(i=0; i<list_getSize(p1);i++){
-                    if(p->estado==1 && p->id==id){
+                    if(p->estado==1 && existe==i){
                         list_printMovie(list_get(p1,i));
                 }
                }
 }
-int buscarPorid(EMovie* p, MovieList* p1,int id)
+int buscarPorNombre(EMovie* p, MovieList* p1,char titulo[])
 {
     int aux=-1;
     int i;
     for(i=0; i<list_getSize(p1);i++){
-                    if(p->estado==1 && p->id==id){
+                    if(p->estado==1 && strcmp(p->titulo,titulo)==0){
                         //list_printMovie(list_get(p1,i));
                         aux=i;
                 }
@@ -273,7 +264,8 @@ void iniciaArchivoHtml(EMovie* lista, MovieList* p1)
             {
                 if( lista->estado==1)
                 {
-                    fprintf(archivoHtml,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",(lista+i)->linkImagen,(lista+i)->titulo,(lista+i)->genero,(lista+i)->puntaje,(lista+i)->duracion,(lista+i)->descripcion);
+                    fprintf(archivoHtml,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",lista->linkImagen,lista->titulo,lista->genero,lista->puntaje,lista->duracion,lista->descripcion);
+
                 }
             }
     }

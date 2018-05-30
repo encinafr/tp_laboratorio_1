@@ -21,7 +21,7 @@ typedef struct
 
 //int buscarPorid(EMovie* p, int tam,int id);
 
-int list_enterMovie(EMovie* p,MovieList* P1);
+int list_enterMovie(EMovie* p,MovieList* P1,char titulo[]);
 void list_printMovie(EMovie* p);
 int list_getSize(MovieList* pl);
 EMovie* list_get(MovieList* pl,int i);
