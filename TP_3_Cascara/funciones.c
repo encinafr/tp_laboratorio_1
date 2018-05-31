@@ -244,14 +244,3 @@ void list_printHtlm(EMovie* p,FILE* parch)
     fprintf(parch,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",p->linkImagen,p->titulo,p->genero,p->puntaje,p->duracion,p->descripcion);
 
 }
-void list_printBinario(EMovie* p,FILE* parch){
-
-        fseek(parch , 0L, SEEK_END);
-        fflush(stdin);
-        fwrite(&p, sizeof(EMovie), 1,parch);
-}
-
-void list_readMovie(EMovie* p,FILE* parch)
-{
-        fread(&p, sizeof(EMovie*), 1, parch);
-}
