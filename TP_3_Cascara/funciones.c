@@ -9,11 +9,11 @@
  */
 MovieList* list_initMovieList(void)
 {
-    MovieList* pl = (MovieList*)malloc(sizeof(MovieList)); // creamos una estructura que contiene las variables que antes eran globales
+    MovieList* pl = (MovieList*)malloc(sizeof(MovieList));
 
     pl->index=0;
     pl->listSize=2;
-    pl->movie = (EMovie*)malloc(sizeof(EMovie*)*pl->listSize); // Ahora cada item del array es un puntero a una estructura
+    pl->movie = (EMovie*)malloc(sizeof(EMovie*)*pl->listSize);
 
     return pl;
 }
@@ -24,27 +24,21 @@ EMovie* list_get(MovieList* pl,int i)
 
     return NULL;
 }
+
 int list_getSize(MovieList* pl)
 {
     return pl->index;
-}
-// A partir de aca, todas las funciones que interactuaban con la lista (que era global) ahora reciben como primer argumento, la struct PeopleList
-//***********************************************************************************************************************************************
-int list_getid(EMovie* Movie)
-{
- return Movie->id;
 }
 
 
 void list_addMovie(MovieList* pl, EMovie* p)
 {
-    pl->movie[pl->index]=p; // copiamos el puntero a la estrcutura cargada "p" a una posicion del array de punteros.
+    pl->movie[pl->index]=p;
     pl->index++;
-// si no hay mas lugar, pedimos más memoria para hacer un array más grande
+
     if(pl->index>=pl->listSize)
     {
-     // printf("no hay mas lugar, redefinimos el array\r\n");
-      pl->listSize+=2; // agregamos dos mas
+      pl->listSize+=2;
       pl->movie = (EMovie**)realloc(pl->movie,sizeof(EMovie*)*pl->listSize);
     }
 
@@ -203,8 +197,8 @@ int menuModifica()
 
     return opcion;
 }
-/** \brief Imprime los datos de una estructura Person
- * \param Person p : Puntero a estructura Person
+/** \brief Imprime los datos de una estructura
+ * \param EMovie p : Puntero a estructura EMovie
  * \return void
  */
 void list_printMovie(EMovie* p)
