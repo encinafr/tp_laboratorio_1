@@ -19,46 +19,38 @@ typedef struct
     int index;
 }MovieList;
 
-//int buscarPorid(EMovie* p, int tam,int id);
-
-int list_enterMovie(EMovie* p,MovieList* P1,char titulo[]);
-void list_printMovie(EMovie* p);
-int list_getSize(MovieList* pl);
-EMovie* list_get(MovieList* pl,int i);
-
-
-
 MovieList* list_initMovieList(void);
+EMovie* list_get(MovieList* pl,int i);
+int list_getSize(MovieList* pl);
+int list_getid(EMovie* Movie);
 void list_addMovie(MovieList* pl, EMovie* p);
 EMovie* list_newMovie(void);
-
-EMovie* list_get(MovieList* pl,int i);
 void list_free(MovieList* pl);
-
 void list_remove(MovieList* pl,int indexToDelete);
+int list_enterMovie(EMovie* p,MovieList* P1,char titulo[]);
+int list_modicaMovie(EMovie* p,MovieList* p1,int existe);
+void list_printMovie(EMovie* p);
+void list_printMovies(EMovie* p,MovieList* p1);
+void list_printMoviesName(EMovie* p,MovieList* p1,int existe);
+int buscarPorNombre(EMovie* p, MovieList* p1,char titulo[]);
+void list_printHtlm(EMovie* p,FILE* parch);
 
 
 
 
-/**
- *  Agrega una pelicula al archivo binario
- *  @param movie la estructura a ser agregada al archivo
- *  @return retorna 1 o 0 de acuerdo a si pudo agregar la pelicula o no
- */
-int agregarPelicula(EMovie movie);
-
-/**
- *  Borra una pelicula del archivo binario
- *  @param movie la estructura a ser eliminada al archivo
- *  @return retorna 1 o 0 de acuerdo a si pudo eliminar la pelicula o no
- */
 
 
-/**
- *  Genera un archivo html a partir de las peliculas cargadas en el archivo binario.
- *  @param lista la lista de peliculas a ser agregadas en el archivo.
- *  @param nombre el nombre para el archivo.
- */
+
+
+
+
+
+
+
+
+
+
+
 
 
 

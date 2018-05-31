@@ -6,7 +6,7 @@ int main()
 {
     MovieList* pl = list_initMovieList();
     EMovie* p = list_newMovie(); // creamos una estructura Person de forma dinámica
-    int i,existe,cont,agregar,modificar;
+    int i,existe,cont,agregar,modificar,primerTitulo=0;
     char tituloaux[100];
     char confirma;
     FILE* archivo;
@@ -29,18 +29,13 @@ int main()
         {
             case 1:
                 p = list_newMovie();
-                printf("Ingrese el titulo de la pelicula: ");
-                  fflush(stdin);
-                gets(tituloaux);
-                existe = buscarPorNombre(p,pl,tituloaux);
-                if(existe==-1)
-                {
+                printf("Ingrese el titulo de la pelicula ");
+                   fflush(stdin);
+                 gets(tituloaux);
                      agregar=list_enterMovie(p,pl,tituloaux);
                      list_addMovie(pl,p);
-                }else{
-                    printf("Ya existe la pelicula");
-                    system("pause");
-                }
+
+
                  if(agregar==1){
                     printf("La pelicula fue agregada correctamente\n");
                     system("pause");
@@ -98,7 +93,6 @@ int main()
                     if(modificar==1){
                             printf("La moficacion se a realizado correctamente\n");
                             system("pause");
-                        iniciaArchivoHtml(p,pl);
                     }else{
                         printf("No se a realizado la modificaion");
                      system("pause");
@@ -106,8 +100,28 @@ int main()
 
                break;
             case 4:
-                iniciaArchivoHtml(p,pl);
-               break;
+                archivo= fopen("ListaPeliculas.html","w");
+                    if (archivo== NULL)
+                    {
+                            printf("No se pudo generar el archivo");
+                    }
+                    else
+                    {
+                            for(i=0;i<list_getSize(pl);i++)
+                            {
+                                if(p->estado==1)
+                                {
+                                 list_printHtlm(list_get(pl,i),archivo);
+
+                                }
+                            }
+                         printf(" \t ARCHIVO HTML GENERADO CON EXITO!!");
+                        system("pause");
+                    }
+
+
+
+                break;
             case 5:
                 list_printMovies(p,pl);
                /*  for(i=0; i<list_getSize(pl);i++){

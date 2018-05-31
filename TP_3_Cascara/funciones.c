@@ -55,7 +55,7 @@ void list_addMovie(MovieList* pl, EMovie* p)
  */
 EMovie* list_newMovie(void)
 {
-    EMovie* p = (EMovie*)malloc(sizeof(EMovie)); // creamos una estructura Person de forma dinámica
+    EMovie* p = (EMovie*)malloc(sizeof(EMovie));
     return p;
 }
 
@@ -92,7 +92,7 @@ void list_remove(MovieList* pl,int indexToDelete)
 
 
 
-/** \brief Pide al usuario que se ingresen los datos de una persona y los carga en una estructura pasada por referencia.
+/** \brief Pide al usuario que se ingresen los datos de una pelicula y los carga en una estructura pasada por referencia.
  * \param Person p : Puntero a estructura Person
  * \return 1 si se ingreso salir, de lo contrario 0
  */
@@ -245,36 +245,19 @@ int buscarPorNombre(EMovie* p, MovieList* p1,char titulo[])
 }
 
 
-
-void iniciaArchivoHtml(EMovie* lista, MovieList* p1)
+void list_printHtlm(EMovie* p,FILE* parch)
 {
-    FILE* pArch;
-    int i;
+    fprintf(parch,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",p->linkImagen,p->titulo,p->genero,p->puntaje,p->duracion,p->descripcion);
 
-
-            for(i=0;i<list_getSize(p1);i++)
-            {
-                if(lista->estado==1)
-                {
-                        list_printhtml(list_get(p1,i));
-                }
-            }
-
-
-
-    printf(" \t ARCHIVO HTML GENERADO CON EXITO!!");
-    getch();
 }
-void list_printhtml(EMovie* p,FILE* archivoHtml)
+void list_printBinario(EMovie* p,FILE* parch){
+
+        fseek(parch , 0L, SEEK_END);
+        fflush(stdin);
+        fwrite(&p, sizeof(EMovie), 1,parch);
+}
+
+void list_readMovie(EMovie* p,FILE* parch)
 {
-    archivoHtml= fopen("ListaPeliculas.html","w");
-    if (archivoHtml== NULL)
-    {
-            printf("No se pudo abrir el archivo");
-    }
-    else
-    {
-       fprintf(archivoHtml,"<article class='col-md-4 article-intro'><a href='#'><img class='img-responsive img-rounded' src='%s' alt=''></a><h3><a href='#'>%s</a></h3><ul><li>Género:%s</li><li>Puntaje:%d</li><li>Duración:%d</li></ul>                <p>%s.</p></article>",p->linkImagen,p->titulo,p->genero,p->puntaje,p->duracion,p->descripcion);
-    }
-     fclose(archivoHtml);
+        fread(&p, sizeof(EMovie*), 1, parch);
 }
